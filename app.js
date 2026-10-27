@@ -1,0 +1,6 @@
+const menu=document.querySelector('.menu'),nav=document.querySelector('nav');
+menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open);});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+const links=[...document.querySelectorAll('nav a:not(.contact-link)')];const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));}}),{rootMargin:'-35% 0px -55%'});document.querySelectorAll('main section[id]').forEach(s=>observer.observe(s));
+const form=document.querySelector('form');form.addEventListener('submit',e=>{e.preventDefault();if(!form.checkValidity()){form.reportValidity();return}const msg=form.querySelector('.form-message');msg.textContent='お問い合わせを承りました。内容を確認のうえ、ご連絡いたします。';form.reset();});
+const photos=[...document.querySelectorAll('.photo-frame')];const pauseOffscreen=new IntersectionObserver(entries=>entries.forEach(e=>e.target.classList.toggle('paused',!e.isIntersecting)),{threshold:.12});photos.forEach(p=>pauseOffscreen.observe(p));document.addEventListener('visibilitychange',()=>photos.forEach(p=>p.classList.toggle('paused',document.hidden)));
